@@ -1,3 +1,5 @@
 const router = require('express').Router();
 
-router.use()
+router.use('/contact-us', require('./contactUs'))
+
+module.exports = router;
