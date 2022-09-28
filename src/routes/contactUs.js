@@ -11,4 +11,7 @@ contactUs.get('/', contactUsController.getDataContactUs)
 // Post
 contactUs.post('/', contactUsController.createContactUs)
 
+// Delete
+contactUs.delete('/:id', contactUsController.deleteDataContactUs)
+
 module.exports = contactUs;
