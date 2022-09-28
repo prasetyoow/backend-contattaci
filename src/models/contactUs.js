@@ -1,9 +1,10 @@
 const e = require('express');
 const db = require('../helpers/db')
+const {LIMIT_DATA} = process.env
 
 exports.createContactUs = (data, cb) => {
-  const q = 'INSERT INTO contactus (name, email, message) VALUES ($1, $2, $3) RETURNING *'
-  const value = [data.name, data.email, data.message];
+  const q = 'INSERT INTO contactus (name, email, phone_number, message) VALUES ($1, $2, $3, $4) RETURNING *'
+  const value = [data.name, data.email, data.phone_number, data.message];
   db.query(q, value, (err, res) => {
     if (res) {
       cb(err, res.rows);
@@ -13,9 +14,28 @@ exports.createContactUs = (data, cb) => {
   });
 };
 
-exports.getDataContactUs = (cb) => {
-  db.query('SELECT * FROM contactus ORDER BY id DESC', (err, res)=>{
-      console.log(err);
+exports.getDataContactUs = (searchBy, keyword, sortBy, sortType, limit = parseInt(LIMIT_DATA), offset = 0, cb) => {
+  const q = `SELECT * FROM contactus WHERE ${searchBy} ILIKE '%${keyword}%' ORDER BY ${sortBy} ${sortType} LIMIT $1 OFFSET $2`;
+  const val = [limit, offset];
+  db.query(q, val, (err, res) => {
+    if (res) {
       cb(err, res.rows);
+    } else {
+      cb(err)
+    }
   });
 }
+
+exports.countAllDataContactUs = (searchBy, keyword, cb) => {
+  db.query(`SELECT * FROM contactus WHERE ${searchBy} ILIKE '%${keyword}%'`, (err, res) => {
+    cb(err, res.rowCount);
+  })  
+}
+
+exports.deleteDataContactUs = (id, cb) => {
+  const query = 'DELETE FROM contactus WHERE id=$1 RETURNING *';
+  const value = [id];
+  db.query(query, value, (err, res) => {
+    cb(res.rows);
+  });
+};
