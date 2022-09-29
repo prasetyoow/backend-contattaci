@@ -32,6 +32,24 @@ exports.countAllDataContactUs = (searchBy, keyword, cb) => {
   })  
 }
 
+exports.getDataContactUsById = (id, cb) => {
+  const query = ('SELECT * FROM contactus WHERE id=$1')
+  const value = [id]
+  db.query(query, value, (err, res) => {
+    cb(err, res.rows)
+  })
+}
+
+exports.editDataContactUs = (id, data, cb) => {
+  const query = 'UPDATE contactus SET name=$2, email=$3, message=$4 WHERE id=$1 RETURNING *';
+  const value = [id, data.name, data.email, data.message]
+  db.query(query, value, (err, res) => {
+    console.log(err)
+    console.log(res)
+    cb(err, res.rows)
+  })
+}
+
 exports.deleteDataContactUs = (id, cb) => {
   const query = 'DELETE FROM contactus WHERE id=$1 RETURNING *';
   const value = [id];

@@ -32,6 +32,24 @@ exports.getDataContactUs = (req, res) => {
   });
 };
 
+exports.getDataContactUsById = (req, res) => {
+  const {id} = req.params;
+  contactUsModel.getDataContactUsById(id, (err, results) => {
+    return response(res, 'Got the data', results)
+  })
+}
+
+exports.editDataContactUs = (req, res) => {
+  const {id} = req.params;
+  contactUsModel.editDataContactUs(id, req.body, (err, results) => {
+    if (err) {
+      return errorResponse(res, 'Error boy');
+    } else {
+      return response(res, 'Data updated!', results)
+    }       
+  })
+}
+
 exports.deleteDataContactUs = (req, res) => {
   const {id} = req.params;
   contactUsModel.deleteDataContactUs(id, (results) => {

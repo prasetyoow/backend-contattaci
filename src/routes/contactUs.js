@@ -9,7 +9,11 @@ const contactUsController = require('../controllers/contactUs')
 contactUs.get('/', contactUsController.getDataContactUs)
 
 // Post
-contactUs.post('/', contactUsController.createContactUs)
+contactUs.post('/', ...rules, validation, contactUsController.createContactUs)
+
+// Patch
+contactUs.patch('/:id', ...rules, validation, contactUsController.editDataContactUs)
+contactUs.get('/:id', contactUsController.getDataContactUsById)
 
 // Delete
 contactUs.delete('/:id', contactUsController.deleteDataContactUs)
