@@ -44,8 +44,6 @@ exports.editDataContactUs = (id, data, cb) => {
   const query = 'UPDATE contactus SET name=$2, email=$3, message=$4 WHERE id=$1 RETURNING *';
   const value = [id, data.name, data.email, data.message]
   db.query(query, value, (err, res) => {
-    console.log(err)
-    console.log(res)
     cb(err, res.rows)
   })
 }
