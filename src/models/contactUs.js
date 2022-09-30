@@ -28,7 +28,7 @@ exports.getDataContactUs = (searchBy, keyword, sortBy, sortType, limit = parseIn
 
 exports.countAllDataContactUs = (searchBy, keyword, cb) => {
   db.query(`SELECT * FROM contactus WHERE ${searchBy} ILIKE '%${keyword}%'`, (err, res) => {
-    cb(err, res.rowCount);
+    cb(err, res?.rowCount);
   })  
 }
 

@@ -17,7 +17,7 @@ exports.getDataContactUs = (req, res) => {
   const offset = (page - 1) * limit;
   
   contactUsModel.getDataContactUs(searchBy, keyword, sortBy, sortType, limit, offset, (err, results) => {
-    if (results.length < 1) {
+    if (results?.length < 1) {
       return res.redirect('/404');
     }
     const pageInfo = {};
